@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}
+<title>Home - Quakers and the Holocaust</title>
+{% endblock %}
+
+{% block content %}
+<div class="modal" id="searchModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<section class="page-section cta">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <div class="cta-inner text-center rounded">
+                    <h2 class="section-heading mb-4"><span class="section-heading-lower">Add materials</span></h2>
+                    <p class="mb-0">
+                        
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <th scope="col"></th> <!-- Book thumbnail -->
+                                <th scope="col"> <input type="text" id="author" name="author" placeholder="Author..."></th>
+                                <th scope="col"><input type="text" id="title" name="title" placeholder="Title..."></th>
+
+                        
+                            <button type="submit" class="btn btn-outline-dark">Search</button>
+                            <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#searchModal"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z"/>
+                              </svg></button>
+                             
+                          </form>
+
+
+                          {% if results %}
+                          <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col"></th> <!-- Book thumbnail -->
+                                <th scope="col">Author</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Publisher</th>
+                                <th scope="col">Date</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                {% for result in results %}
+                              <tr>
+                                <th scope="row"><img src="{{ result.imageLinks.smallThumbnail }}"/></th>
+                                <td>{{result.authors|first}}</td>
+                                <td>{{ result.title }}</td>
+                                <td>{{ result.publisher }}</td>
+                                <td>{{ result.publishedDate }}</td>
+                              </tr>
+                              {% endfor %}
+                              
+                            </tbody>
+                          </table>
+                          {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

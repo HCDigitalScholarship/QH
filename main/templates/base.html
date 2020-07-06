@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i">
 </head>
 
-<body style="background: linear-gradient(rgba(47, 23, 15, 0.65), rgba(47, 23, 15, 0.65)), url('static/img/auschwitz-concentration-camp-bunkhouse-history-war-prison.jpg');">
+<body style="background: linear-gradient(rgba(47, 23, 15, 0.65), rgba(47, 23, 15, 0.65)), url(' {% static "/img/auschwitz-concentration-camp-bunkhouse-history-war-prison.jpg" %}');">
     {% include 'navbar.html' %}
     {% block content %}{% endblock %}  
     {% include 'footer.html' %}
