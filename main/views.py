@@ -11,8 +11,7 @@ def home(request):
 def edit(request):
     context = {}
     if request.POST: 
-        query = request.POST.get('query', None)
-        query = {'q':'A book','title':'Russia in the Era of NEP','author':'Fitzpatrick'}
+        query = request.POST
         query = format_query(**query)
         response = search(query)
         results = parse_results(response)

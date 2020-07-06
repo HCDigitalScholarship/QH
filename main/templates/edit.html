@@ -1,34 +1,66 @@
-{% extends 'base.html' %}
 {% load static %}
-{% block title%}
-<title>Home - Quakers and the Holocaust</title>
-{% endblock %}
 
-{% block content %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    {% block title %}{% endblock %}  
+    <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i">
+</head>
+
+<body style="background: linear-gradient(rgba(47, 23, 15, 0.65), rgba(47, 23, 15, 0.65)), url(' {% static "/img/auschwitz-concentration-camp-bunkhouse-history-war-prison.jpg" %}');">
+
 <div class="modal" id="searchModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
+          <h5 class="modal-title">Search</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <p>Modal body text goes here.</p>
+            <form method="post">
+                {% csrf_token %}
+
+               
+                     <input type="text" id="author" name="author" placeholder="Author..."><br>
+                    <input type="text" id="title" name="title" placeholder="Title..."><br>
+                     <input type="text" id="publisher" name="publisher" placeholder="Publisher..."><br>
+                    <input type="text" id="subject" name="subject" placeholder="Subject..."><br>
+                     <input type="text" id="isbn" name="isbn" placeholder="ISBN..."><br>
+                     <input type="text" id="lccn" name="lccn" placeholder="LCCN..."><br>
+                     <input type="text" id="oclc" name="oclc" placeholder="OCLC..."><br>
+                  
+            
+                 
+             
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </form>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
+
 <section class="page-section cta">
     <div class="container">
         <div class="row">
+           
+
             <div class="col-xl-9 mx-auto">
+                <a style="color:black;" href="{% url 'home' %}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z"/>
+                    <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                  </svg></a>
                 <div class="cta-inner text-center rounded">
+                    
                     <h2 class="section-heading mb-4"><span class="section-heading-lower">Add materials</span></h2>
                     <p class="mb-0">
                         
@@ -79,4 +111,9 @@
         </div>
     </div>
 </section>
-{% endblock %}
+<script src="{% static '/js/jquery.min.js' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static '/js/current-day.js' %}"></script>
+</body>
+
+</html>

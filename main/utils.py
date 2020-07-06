@@ -6,20 +6,29 @@ def format_query(**kwargs):
     query = ""
     if 'q' in kwargs:
         query += kwargs['q']    
+    else:
+        query += '.'
     if 'title' in kwargs:
-        query += '+intitle:' + kwargs['title']
+        if len(kwargs['title'][0]) > 0:
+            query += '+intitle:' + kwargs['title'][0]
     if 'author' in kwargs: 
-        query += '+inauthor:' + kwargs['author']
-    if 'publisher' in kwargs: 
-        query += '+inpublisher:' + kwargs['publisher']
+        if len(kwargs['author'][0]) > 0:
+            query += '+inauthor:' + kwargs['author'][0]
+    if 'publisher' in kwargs:
+        if len(kwargs['publisher'][0]) > 0: 
+            query += '+inpublisher:' + kwargs['publisher'][0]
     if 'subject' in kwargs: 
-        query += '+subject:' + kwargs['subject']
+        if len(kwargs['subject'][0]) > 0:
+            query += '+subject:' + kwargs['subject'][0]
     if 'isbn' in kwargs: 
-        query += '+isbn:' + kwargs['isbn']
+        if len(kwargs['isbn'][0]) > 0:
+            query += '+isbn:' + kwargs['isbn'][0]
     if 'lccn' in kwargs: 
-        query += '+lccn:' + kwargs['lccn']
+        if len(kwargs['lccn'][0]) > 0:
+            query += '+lccn:' + kwargs['lccn'][0]
     if 'oclc' in kwargs: 
-        query += '+oclc:' + kwargs['oclc']
+        if len(kwargs['oclc'][0]) > 0:
+            query += '+oclc:' + kwargs['oclc'][0]
     return query 
 
 def search(query):
@@ -29,6 +38,9 @@ def search(query):
 
 def parse_results(response):
     results = []
-    for book in response['items']:
-        results.append(book['volumeInfo'])
+    try:
+        for book in response['items']:
+            results.append(book['volumeInfo'])
+    except KeyError: # no response items
+        pass
     return results 
