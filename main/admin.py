@@ -1,8 +1,8 @@
 from django.contrib import admin
-from main.models import Book
+from main.models import Item
 # Register your models here.
-class BookAdmin(admin.ModelAdmin):
+class ItemAdmin(admin.ModelAdmin):
     search_fields = ['name', ]
 
 
-admin.site.register(Book, BookAdmin)
+admin.site.register(Item, ItemAdmin)

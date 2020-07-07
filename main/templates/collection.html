@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    {% block title %}{% endblock %}  
+    <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i">
+</head>
+
+<body style="background: linear-gradient(rgba(47, 23, 15, 0.65), rgba(47, 23, 15, 0.65)), url(' {% static "/img/auschwitz-concentration-camp-bunkhouse-history-war-prison.jpg" %}');">
+
+
+<section class="page-section cta">
+    <div class="container">
+        <div class="row">
+           
+
+            <div class="col-xl-9 mx-auto">
+                <a style="color:black;" href="{% url 'home' %}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z"/>
+                    <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                  </svg></a>
+                <div class="cta-inner text-center rounded">
+                    
+                    <h2 class="section-heading mb-4"><span class="section-heading-lower">The Collection</span></h2>
+
+                          {% if items %}
+                          <table class="table table-hover">
+                            <thead>
+                              <tr >
+                                <th scope="col"></th> <!-- Book thumbnail -->
+                                <th scope="col">Author</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Publisher</th>
+                                <th scope="col">Date</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                
+                                <th scope="row"><img src="{{ item.thumbnail }}"/></th>
+                                <td>{{item.authors.all|join:", "}}</td>
+                                <td>{{ item.title }}</td>
+                                <td>{{ item.publisher|default_if_none:"" }}</td>
+                                <td>{{ item.publishedDate|default_if_none:"" }}</td>
+
+                              </tr>
+                              {% endfor %}
+                              
+                            </tbody>
+                          </table>
+                          {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="{% static '/js/jquery.min.js' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static '/js/current-day.js' %}"></script>
+
+</body>
+
+</html>
