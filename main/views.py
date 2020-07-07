@@ -40,6 +40,7 @@ def add_book(request):
         book.published_date = parse_date(data['publishedDate'])
         book.identifier = data['industryIdentifiers'][0]['identifier']
         book.language = data['language']
+        book.publisher = data['publisher']
         book.page_count= data['pageCount']
         book.thumbnail = data['imageLinks']['thumbnail']
         book.print_type = data['printType']
