@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
 from main.utils import parse_results, search, format_query
+from django.http import JsonResponse, HttpResponse
+from main.models import Book, Author, Category
+from django.utils.dateparse import parse_date
 
 # Create your views here.
 def home(request):
@@ -18,3 +21,35 @@ def edit(request):
         context['results'] = results
     
     return render(request, 'edit.html', context)
+
+@staff_member_required
+def add_book(request):
+    if request.POST: 
+        data = request.POST.get("data", None)
+        data = eval(data)
+        
+        book, created = Book.objects.update_or_create(
+           
+            title = data['title'],
+            publisher = data['publisher'],
+            published_date = parse_date(data['publishedDate']),
+            identifier = data['industryIdentifiers'][0]['identifier'],
+            language = data['language'],
+            page_count= data['pageCount'],
+            thumbnail = data['imageLinks']['thumbnail'],
+            raw_json = str(data)
+
+        )
+        for author in data['authors']:
+            author, created = Author.objects.get_or_create(name=author)
+            book.authors.add(author.pk)
+        for category in data['categories']:
+            category, created = Category.objects.get_or_create(name=category)
+            book.categories.add(category.pk)
+        book.save()
+        if created:
+            return JsonResponse({"message": "Added: " + book.title })
+        else:
+            return JsonResponse({"message": "[*] Error: Not Added"})
+    else:
+        return HttpResponse("🧙 You are lost my friend.  Let the back button be your guide. 🧙")

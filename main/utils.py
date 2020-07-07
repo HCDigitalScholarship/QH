@@ -1,5 +1,6 @@
 import requests
 from django.conf import settings
+import json 
 api_key = settings.GOOGLE_API
 
 def format_query(**kwargs):

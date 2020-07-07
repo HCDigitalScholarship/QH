@@ -61,7 +61,7 @@
                   </svg></a>
                 <div class="cta-inner text-center rounded">
                     
-                    <h2 class="section-heading mb-4"><span class="section-heading-lower">Add materials</span></h2>
+                    <h2 class="section-heading mb-4"><span class="section-heading-lower">Add Books</span></h2>
                     <p class="mb-0">
                         
                         <form method="post">
@@ -83,7 +83,7 @@
                           {% if results %}
                           <table class="table table-hover">
                             <thead>
-                              <tr>
+                              <tr >
                                 <th scope="col"></th> <!-- Book thumbnail -->
                                 <th scope="col">Author</th>
                                 <th scope="col">Title</th>
@@ -93,12 +93,18 @@
                             </thead>
                             <tbody>
                                 {% for result in results %}
-                              <tr>
+                                {% with result.industryIdentifiers|first as id %}
+
+                              <tr onclick="add_record(this)" >
+                                <input type="hidden" id="{{ id.identifier }}" value="{{ result }}">
+
+                                {% endwith %}
                                 <th scope="row"><img src="{{ result.imageLinks.smallThumbnail }}"/></th>
                                 <td>{{result.authors|first}}</td>
                                 <td>{{ result.title }}</td>
                                 <td>{{ result.publisher }}</td>
                                 <td>{{ result.publishedDate }}</td>
+
                               </tr>
                               {% endfor %}
                               
@@ -114,6 +120,20 @@
 <script src="{% static '/js/jquery.min.js' %}"></script>
 <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static '/js/current-day.js' %}"></script>
+<script>
+  function add_record(e){
+    let data = e.getElementsByTagName("input")[0].value
+    $.ajax({
+          url : "/add_book/",
+          type: "POST",
+          data : {'data': data, 'csrfmiddlewaretoken': '{{ csrf_token }}',},
+          dataType : "json",
+          success: function (response) {
+                   alert(response.message);
+               }
+        });
+  };
+</script>
 </body>
 
 </html>
