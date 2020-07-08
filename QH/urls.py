@@ -20,8 +20,10 @@ from main import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
-    path('edit/', views.edit, name="edit"),
+    path('edit_book/', views.edit_book, name="edit_book"),
     path('collection/', views.collection, name="collection"),
     path('add_book/', views.add_book, name="add_book"),
+    path('edit_item/', views.edit_item, name="edit_item"),
+    path('add_item/', views.add_item, name="add_item"),
 
 ]

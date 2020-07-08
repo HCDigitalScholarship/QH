@@ -4,6 +4,7 @@ from main.utils import parse_results, search, format_query
 from django.http import JsonResponse, HttpResponse
 from main.models import Item, Author, Category
 from django.utils.dateparse import parse_date
+from main.worldcat import search_worldcat
 
 # Create your views here.
 def home(request):
@@ -16,7 +17,7 @@ def collection(request):
     return render(request, 'collection.html', context)
 
 @staff_member_required
-def edit(request):
+def edit_book(request):
     context = {}
     if request.POST: 
         query = request.POST
@@ -25,10 +26,26 @@ def edit(request):
         results = parse_results(response)
         context['results'] = results
     
-    return render(request, 'edit.html', context)
+    return render(request, 'edit_book.html', context)
+
+@staff_member_required
+def edit_item(request):
+    context = {}
+    if request.POST: 
+        query = request.POST.get('query',None)
+        context['results'] = search_worldcat(query)
+    return render(request, 'edit_item.html', context)
+
+@staff_member_required
+def add_item(request):
+    
+    return HttpResponse("🧙 You are lost my friend.  Let the back button be your guide. 🧙")
+
 
 @staff_member_required
 def add_book(request):
+    """An endpoint to handle ajax requests from edit.html. When a search result is clicked, its data is send here
+    and added to the database"""
     if request.POST: 
         data = request.POST.get("data", None)
         data = eval(data)

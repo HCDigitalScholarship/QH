@@ -3,16 +3,12 @@
     <div class="container"><a class="navbar-brand text-uppercase d-lg-none text-expanded" href="#">Quakers and the Holocaust</a><button data-toggle="collapse" data-target="#navbarResponsive" class="navbar-toggler" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div
             class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="nav navbar-nav mx-auto">
-                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                
-                
-                
+            <ul class="nav navbar-nav mx-auto">                
                 <li class="nav-item" role="presentation"><a class="nav-link" href="about.html">About</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" href="products.html">Collection</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'collection' %}">Collection</a></li>
                 <li class="nav-item" role="presentation"><a class="nav-link" href="store.html">Research</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'edit' %}">Add Books</a></li>
-                
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'edit_book' %}">Add Books</a></li>
+
             </ul>
     </div>
     </div>
