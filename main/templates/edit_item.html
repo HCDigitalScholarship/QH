@@ -45,7 +45,7 @@
                           {% if results %}
                           <table class="table table-hover">
                             <thead>
-                              <tr >
+                              <tr onclick="fish()">
                                 <th scope="col">Author</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">ID</th>
@@ -53,7 +53,7 @@
                             </thead>
                             <tbody>
                                 {% for result in results %}
-                                
+                              <tr onclick="add_record(this)">
                                 <td>{{result.author}}</td>
                                 <td>{{ result.title }}</td>
                                 <td><a href="{{ result.id }}" target="_blank">full record</a></td>
@@ -75,9 +75,10 @@
 <script src="{% static '/js/current-day.js' %}"></script>
 <script>
   function add_record(e){
-    let data = e.getElementsByTagName("input")[0].value
+    let data = e.getElementsByTagName("a")[0].href
+    console.log(data);
     $.ajax({
-          url : "/add_item_json/",
+          url : "/add_item/",
           type: "POST",
           data : {'data': data, 'csrfmiddlewaretoken': '{{ csrf_token }}',},
           dataType : "json",

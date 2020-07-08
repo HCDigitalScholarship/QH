@@ -4,7 +4,7 @@ from main.utils import parse_results, search, format_query
 from django.http import JsonResponse, HttpResponse
 from main.models import Item, Author, Category
 from django.utils.dateparse import parse_date
-from main.worldcat import search_worldcat
+from main.worldcat import search_worldcat, worldcat_soup
 
 # Create your views here.
 def home(request):
@@ -38,8 +38,24 @@ def edit_item(request):
 
 @staff_member_required
 def add_item(request):
-    
-    return HttpResponse("🧙 You are lost my friend.  Let the back button be your guide. 🧙")
+    if request.POST: 
+        data = request.POST.get("data", None)
+        data = worldcat_soup(data)
+        book, created = Item.objects.update_or_create(
+            title = data['title'],
+            thumbnail= data['thumbnail'],
+        )
+        for author in data['authors']:
+            author, created = Author.objects.get_or_create(name=author)
+            book.authors.add(author.pk)
+        for category in data['subjects']:
+            category, created = Category.objects.get_or_create(name=category)
+            book.categories.add(category.pk)
+        book.save()
+        
+        return JsonResponse({"message": "Added " + book.title  })
+    else:
+        return HttpResponse("🧙 You are lost my friend.  Let the back button be your guide. 🧙")
 
 
 @staff_member_required
