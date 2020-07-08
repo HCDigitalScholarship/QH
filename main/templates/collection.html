@@ -47,7 +47,7 @@
                                 <td>{{item.authors.all|join:", "}}</td>
                                 <td>{{ item.title }}</td>
                                 <td>{{ item.publisher|default_if_none:"" }}</td>
-                                <td>{{ item.publishedDate|default_if_none:"" }}</td>
+                                <td>{{ item.published_date|date:'Y'|default_if_none:"" }}</td>
 
                               </tr>
                               {% endfor %}

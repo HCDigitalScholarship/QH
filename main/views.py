@@ -37,13 +37,13 @@ def add_book(request):
             title = data['title'],
             raw_json = str(data),
         )
-        book.published_date = parse_date(data['publishedDate'])
+        book.published_date = parse_date(data.get('publishedDate', None))
         book.identifier = data['industryIdentifiers'][0]['identifier']
-        book.language = data['language']
-        book.publisher = data['publisher']
-        book.page_count= data['pageCount']
+        book.language = data.get('language',None)
+        book.publisher = data.get('publisher', None)
+        book.page_count= data.get('pageCount', None)
         book.thumbnail = data['imageLinks']['thumbnail']
-        book.print_type = data['printType']
+        book.print_type = data.get('printType',None)
         for author in data['authors']:
             author, created = Author.objects.get_or_create(name=author)
             book.authors.add(author.pk)
