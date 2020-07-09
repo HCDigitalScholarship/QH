@@ -70,7 +70,7 @@ def add_book(request):
             title = data['title'],
             raw_json = str(data),
         )
-        book.published_date = parse_date(data.get('publishedDate', None))
+        book.published_date = parse_date(data['publishedDate'])
         book.identifier = data['industryIdentifiers'][0]['identifier']
         book.language = data.get('language',None)
         book.publisher = data.get('publisher', None)
