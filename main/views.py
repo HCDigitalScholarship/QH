@@ -5,6 +5,7 @@ from django.http import JsonResponse, HttpResponse
 from main.models import Item, Author, Category
 from django.utils.dateparse import parse_date
 from main.worldcat import search_worldcat, worldcat_soup
+from django.core.paginator import Paginator
 
 # Create your views here.
 def home(request):
@@ -13,7 +14,12 @@ def home(request):
 
 def collection(request):
     context = {}
-    context['items'] = Item.objects.all()
+    items = Item.objects.all()
+    paginator = Paginator(items, 25) # Show 25 contacts per page.
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context['items'] = page_obj
     return render(request, 'collection.html', context)
 
 @staff_member_required
