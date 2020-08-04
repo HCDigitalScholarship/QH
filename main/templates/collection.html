@@ -10,6 +10,98 @@
     <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i">
+    <style>
+        /* https://3d-book-css.netlify.app/ */
+       .book-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 600px;
+}
+
+@keyframes initAnimation {
+  0% {
+    transform: rotateY(-30deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+.book {
+  width: 140px;
+  height: 214px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transition: 1s ease;
+  animation: 1s ease 0s 1 initAnimation;
+}
+
+.book:hover {
+  transform: rotateY(-30deg);
+}
+
+.book > :first-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: red;
+  width: 140px;
+  height: 214px;
+  transform: translateZ(25px);
+  background-color: #01060f;
+  border-radius: 0 2px 2px 0;
+  box-shadow: 5px 5px 20px #666;
+}
+
+.book::before {
+  position: absolute;
+  content: ' ';
+  background-color: blue;
+  left: 0;
+  top: 3px;
+  width: 48px;
+  height: 208px;
+  transform: translateX(112px) rotateY(90deg);
+  background: linear-gradient(90deg, 
+    #fff 0%,
+    #f9f9f9 5%,
+    #fff 10%,
+    #f9f9f9 15%,
+    #fff 20%,
+    #f9f9f9 25%,
+    #fff 30%,
+    #f9f9f9 35%,
+    #fff 40%,
+    #f9f9f9 45%,
+    #fff 50%,
+    #f9f9f9 55%,
+    #fff 60%,
+    #f9f9f9 65%,
+    #fff 70%,
+    #f9f9f9 75%,
+    #fff 80%,
+    #f9f9f9 85%,
+    #fff 90%,
+    #f9f9f9 95%,
+    #fff 100%
+    );
+}
+
+.book::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: ' ';
+  width: 140px;
+  height: 214px;
+  transform: translateZ(-25px);
+  background-color: #01060f;
+  border-radius: 0 2px 2px 0;
+}
+HTML
+    </style>
 </head>
 
 <body style="background: linear-gradient(rgba(47, 23, 15, 0.65), rgba(47, 23, 15, 0.65)), url(' {% static "/img/auschwitz-concentration-camp-bunkhouse-history-war-prison.jpg" %}');">
@@ -43,7 +135,19 @@
                             <tbody>
                                 {% for item in items %}
                                 
-                                <th scope="row"><img src="{{ item.thumbnail }}"/></th>
+                                <th scope="row"><a 
+                                    class="book-container"
+                                    href="https://theoutstanding.dev/"
+                                    target="_blank"
+                                    rel="noreferrer noopener"
+                                  >
+                                    <div class="book">
+                                      <img
+                                        alt="{{ item.title }}"
+                                        src="{{ item.thumbnail }}"
+                                        />
+                                    </div>
+                                  </a></th>
                                 <td>{{item.authors.all|join:", "}}</td>
                                 <td>{{ item.title }}</td>
                                 <td>{{ item.publisher|default_if_none:"" }}</td>
